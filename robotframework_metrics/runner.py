@@ -77,7 +77,7 @@ def parse_options():
     general.add_argument(
         '-d', '--showdocs',
         dest='showdocs',
-        default="False",
+        default="True",
         help="Display test case documentation in test metrics"
     )
 

@@ -529,6 +529,7 @@
       <table id="sm" class="display tablecard" style="width:100%">
         <thead>
           <tr>
+            <th>Order</th>
             <th>Name</th>
             <th>Status</th>
             <th>Total</th>
@@ -540,6 +541,7 @@
         </thead>
         <tfoot>
           <tr>
+            <th></th>
             <th><input type="text" placeholder="Search Name" /></th>
             <th><input type="text" placeholder="Search Status" /></th>
             <th></th>
@@ -552,6 +554,7 @@
         <tbody>
           {% for suite in suites %}
           <tr>
+            <td class="td_left">{{ suite['Order'] }}</td>
             <td class="td_left" data-toggle="tooltip" title="{{ suite['Name'] }}"
               onclick="openInNewTab('{{ log_name }}#{{ suite['Id'] }}','#{{ suite['Id'] }}')"
               style="cursor: pointer; color:blue;">
@@ -581,18 +584,22 @@
       <table id="tm" class="display tablecard" style="width:100%">
         <thead>
           <tr>
-            <th style="width: 20%;">Suite Name</th>
+            <th style="width:  1%;">Order</th>
+            <th style="width:  5%;">Suite Name</th>
             <th style="width: 20%;">Test Name</th>
+            <th style="width: 20%;" class="{{hide_docs}}">Documentation</th>
             <th style="width: 10%;">Status</th>
-            <th style="width: 10%;">Time (s)</th>
+            <th style="width:  4%;">Time (s)</th>
             <th style="width: 20%;">Message</th>
             <th style="width: 20%;" class="{{hide_tags}}">Tags</th>
           </tr>
         </thead>
         <tfoot>
           <tr>
+            <th></th>
             <th><input type="text" placeholder="Search Suite" /></th>
             <th><input type="text" placeholder="Search Name" /></th>
+            <th class="{{hide_docs}}"><input type="text" placeholder="Search Documentation" /></th>
             <th><input type="text" placeholder="Search Status" /></th>
             <th></th>
             <th><input type="text" placeholder="Search Message" /></th>
@@ -602,11 +609,14 @@
         <tbody>
           {% for test in tests %}
           <tr>
-            <td class="td_left" style="width: 200px;">{{ test['Suite Name'] }}</td>
+            <td class="td_left">{{ test['Order'] }}</td>
+            <td class="td_left">{{ test['Suite Name'] }}</td>
             <td class="td_left" data-toggle="tooltip" title="{{ test['Test Name'] }}"
               onclick="openInNewTab('{{ log_name }}#{{ test['Test Id'] }}','#{{ test['Test Id'] }}')"
               style="cursor: pointer; color:blue;width: 200px;">
               {{ test['Test Name'] }}</td>
+            <td class="{{hide_docs}} td_left">{{ test['Documentation'] }}
+            </td>
             {% if (test['Status'] == "PASS") %}
             <td style="color:green">{{ test['Status'] }}</td>
             {% elif (test['Status'] == "FAIL") %}
@@ -795,7 +805,7 @@
         // Initialize DataTables
         $('#sm, #tm, #kmt').DataTable({
           dom: '<"top"lfB>rtip',
-          order: [[2, 'desc']],
+          order: [[0, 'asc']],
           buttons: [
             {
               extend: 'copy',
